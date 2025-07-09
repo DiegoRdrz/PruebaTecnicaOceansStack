@@ -26,7 +26,7 @@ Crea un archivo .env en la raíz del backend y define lo siguiente:
 
 4. Configurar Prisma
 
-Inicializa el cliente Prisma y genera el código necesario ejecutando los siguientes comandos:
+Inicializa el cliente Prisma y genera el código necesario ejecutando los siguientes comnados:
 
 - npx prisma generate
 - npx prisma migrate dev --name init
