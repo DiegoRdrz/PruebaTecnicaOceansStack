@@ -8,9 +8,9 @@ Este proyecto consiste en el desarrollo de una aplicación web full stack orient
 
 El repositorio está organizado en dos carpetas principales:
 
-- - backend/ # API REST construida con Node.js, TypeScript, Prisma ORM y PostgreSQL
-- - frontend/ # Interfaz de usuario desarrollada en React, y tailwindCss
-- - README.md # Documentación general del proyecto
+- backend/ # API REST construida con Node.js, TypeScript, Prisma ORM y PostgreSQL
+- frontend/ # Interfaz de usuario desarrollada en React, y tailwindCss
+- README.md # Documentación general del proyecto
 
 Cada una de estas carpetas incluye su propia documentación específica con instrucciones detalladas para la instalación, configuración y puesta en marcha del componente correspondiente.
 
