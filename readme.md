@@ -40,7 +40,7 @@ La API REST cuenta con documentación generada automáticamente mediante Swagger
 
 Esta documentación es accesible en la siguiente URL, una vez el servidor backend esté en ejecución:
 
-http://localhost:3001/api/docs      (# Aqui cambiamos el puerto por el seleccionado al momento de la instalacion del Back-End)
+http://localhost:4000/api/docs      (# Aqui cambiamos el puerto por el seleccionado al momento de la instalacion del Back-End)
 
 Allí se pueden encontrar todos los endpoints disponibles, organizados por módulos funcionales (productos, órdenes, autenticación), con la descripción detallada de sus parámetros, respuestas esperadas, códigos HTTP y ejemplos interactivos para facilitar su consumo.
 
