@@ -8,9 +8,9 @@ Este proyecto consiste en el desarrollo de una aplicación web full stack orient
 
 El repositorio está organizado en dos carpetas principales:
 
-- - backend/ # API REST construida con Node.js, TypeScript, Prisma ORM y PostgreSQL
-- - frontend/ # Interfaz de usuario desarrollada en React, y tailwindCss
-- - README.md # Documentación general del proyecto
+- backend/      (# API REST construida con Node.js, TypeScript, Prisma ORM y PostgreSQL)
+- frontend/     (# Interfaz de usuario desarrollada en React, y tailwindCss)
+- README.md     (# Documentación general del proyecto)
 
 Cada una de estas carpetas incluye su propia documentación específica con instrucciones detalladas para la instalación, configuración y puesta en marcha del componente correspondiente.
 
@@ -40,14 +40,12 @@ La API REST cuenta con documentación generada automáticamente mediante Swagger
 
 Esta documentación es accesible en la siguiente URL, una vez el servidor backend esté en ejecución:
 
-http://localhost:3001/api/docs      # (Aqui cambiamos el puerto por el seleccionado al momento de la instalacion del Back-End)
+http://localhost:3001/api/docs      (# Aqui cambiamos el puerto por el seleccionado al momento de la instalacion del Back-End)
 
 Allí se pueden encontrar todos los endpoints disponibles, organizados por módulos funcionales (productos, órdenes, autenticación), con la descripción detallada de sus parámetros, respuestas esperadas, códigos HTTP y ejemplos interactivos para facilitar su consumo.
 
 El uso de Swagger garantiza que la documentación se mantenga sincronizada con la implementación actual de la API, facilitando su mantenimiento y comprensión.
 
 Autor
-
 Desarrollado por Diego Rodríguez
-
 Contacto: DiegoRdrz455@gmail.com
