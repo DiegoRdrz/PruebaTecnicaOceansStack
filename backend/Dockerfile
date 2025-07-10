@@ -10,17 +10,20 @@ COPY package*.json ./
 # Instalar dependencias
 RUN npm install
 
-# Copiar el resto de archivos
+# Copiar el resto de archivos del proyecto
 COPY . .
 
-# Generar cliente Prisma
-RUN npx prisma generate#
+# Generar el cliente Prisma
+RUN npx prisma generate
 
-# Ejecutar migraciones de la base de datos
-RUN npx prisma migrate deploy
+# Copiar el script de entrada
+COPY entrypoint.sh ./entrypoint.sh
 
-# Exponer el puerto que usa el backend (ajústalo si usas otro)
+# Dar permisos de ejecución al script
+RUN chmod +x entrypoint.sh
+
+# Exponer el puerto del backend
 EXPOSE 4000
 
-# Comando para iniciar el servidor
-CMD ["npm", "run", "dev"]
+# Comando para iniciar (usando el script que aplica migraciones y arranca)
+CMD ["./entrypoint.sh"]

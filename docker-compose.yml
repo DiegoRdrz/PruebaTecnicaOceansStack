@@ -6,31 +6,37 @@ services:
     container_name: postgres_db
     restart: always
     environment:
-      POSTGRES_USER: postgresql
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 12345
       POSTGRES_DB: ocean_db
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    networks:
+      - ocean-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d ocean_db"]
+      interval: 5s
+      timeout: 2s
+      retries: 20
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
   backend:
     build: ./backend
     container_name: backend_app
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     ports:
       - "4000:4000"
     environment:
-      DATABASE_URL: postgres://postgresql:12345@db:5432/ocean_db
-
-  frontend:
-    build: ./frontend
-    container_name: frontend_app
-    depends_on:
-      - backend
-    ports:
-      - "5173:5173"
+      DATABASE_URL: postgres://postgres:12345@db:5432/ocean_db?schema=public
+    networks:
+      - ocean-network
 
 volumes:
   postgres_data:
+
+networks:
+  ocean-network:
+    name: ocean-network
