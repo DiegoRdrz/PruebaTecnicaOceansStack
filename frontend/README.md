@@ -24,7 +24,7 @@ Luego de clonar el repositorio, vamos a realizar la correcta instalacion del Fro
 
 1. Ahora navegamos a la carpeta raiz del Front-ENd con el siguiente comando:
 
-cd frontend/
+cd PruebaTecnicaOceansStack/frontend/
 
 2. Instalar dependencias con el siguiente comando:
 
