@@ -4,6 +4,19 @@ Este directorio contiene el código fuente del backend de la aplicación de gest
 
 ---
 
+## Tecnologias
+
+- Node.js
+- Express
+- TypeScript
+- PostgreSQL
+- Prisma
+- JWT
+- Swagger
+- Docker Compose
+
+---
+
 ## Instalacion
 
 Luego de clonar el repositorio, vamos a realizar la correcta instalacion del Back-End
