@@ -35,7 +35,7 @@ Inicializa el cliente Prisma y genera el código necesario ejecutando los siguie
 
 Para poder registrar otros usuarios y acceder a endpoints protegidos, es necesario contar con al menos un usuario con rol ADMIN. Ejecuta el siguiente script desde la raíz del backend:
 
-- npx ts-node scripts/createAdmin.ts
+- npx ts-node src/scripts/createAdmin.ts
 
 Este script creará un usuario con credenciales predefinidas (admin@example.com / admin123, por ejemplo). Puedes editar el script para personalizar estos valores antes de ejecutarlo.
 

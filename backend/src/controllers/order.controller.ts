@@ -1,3 +1,4 @@
+// controllers/order.controller.ts
 import { Request, Response } from 'express';
 import prisma from '../prisma/client';
 import { orderSchema } from '../validators/order.validator';
@@ -7,10 +8,8 @@ export const createOrder = async (req: Request, res: Response) => {
   const user = (req as any).user;
 
   try {
-    // Validar input con Zod
     const { items } = orderSchema.parse(req.body);
 
-    // Obtener productos activos que coincidan
     const productIds = items.map(item => item.productId);
     const products = await prisma.product.findMany({
       where: { id: { in: productIds }, isActive: true }
@@ -20,13 +19,11 @@ export const createOrder = async (req: Request, res: Response) => {
       return res.status(400).json({ message: 'Algún producto no existe o está inactivo' });
     }
 
-    // Calcular total
     const total = items.reduce((acc, item) => {
-      const product = products.find((p: { id: number; price: number }) => p.id === item.productId)!;
+      const product = products.find(p => p.id === item.productId)!;
       return acc + product.price * item.quantity;
     }, 0);
 
-    // Crear orden y sus items
     const order = await prisma.order.create({
       data: {
         userId: user.id,
@@ -56,9 +53,17 @@ export const createOrder = async (req: Request, res: Response) => {
   }
 };
 
-export const getAllOrders = async (_req: Request, res: Response) => {
+export const getAllOrders = async (req: Request, res: Response) => {
+  const user = (req as any).user;
+
   try {
+    const whereCondition =
+      user.role === 'WAITER'
+        ? { userId: user.id }
+        : {}; // ADMIN ve todas
+
     const orders = await prisma.order.findMany({
+      where: whereCondition,
       include: {
         user: { select: { id: true, name: true, email: true } },
         items: { include: { product: true } }

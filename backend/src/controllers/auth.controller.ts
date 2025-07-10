@@ -4,7 +4,7 @@ import prisma from '../prisma/client';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'clave_secreta';
+const JWT_SECRET = process.env.JWT_SECRET || 'clave_secreta'; // se puede cambiar esta clave_secreta, por una clave alternativa en caso de no tener un archivo .env
 
 // Login
 export const login = async (req: Request, res: Response) => {

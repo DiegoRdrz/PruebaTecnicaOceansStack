@@ -56,7 +56,7 @@ const router = Router();
  *                             price:
  *                               type: number
  */
-router.get('/', authenticate, authorize(['ADMIN']), getAllOrders);
+router.get('/', authenticate, authorize(['ADMIN', 'WAITER']), getAllOrders);
 
 /**
  * @swagger
