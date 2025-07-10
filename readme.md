@@ -1,5 +1,7 @@
 # PRUEBA TECNICA OCEANS STACK
 
+*PORFAVOR LEER TODO ANTES DE INSTALAR*
+
 Este proyecto consiste en el desarrollo de una aplicación web full stack orientada a la gestión de productos y órdenes en un restaurante. Fue implementado como parte de una prueba técnica, con el propósito de demostrar buenas prácticas de desarrollo, arquitectura escalable, autenticación basada en roles, validaciones robustas y documentación técnica integral.
 
 ---
@@ -29,7 +31,11 @@ Cada una de estas carpetas incluye su propia documentación específica con inst
 Para clonar el proyecto, utilice el siguiente comando:
 git clone https://github.com/DiegoRdrz/PruebaTecnicaOceansStack
 
-Las instrucciones completas para la instalación y configuración del backend, frontend y base de datos se encuentran detalladas en los archivos README dentro de cada carpeta correspondiente:
+LAS SIGUENTES INSTRUCCIONES SON PARA INSTALAR EL APLICATIVO DE MANERA TRADICIONAL, PASO A PASO
+
+SI DESEA VER LA INSTALACION CON DOCKER DAR CLICK [AQUI](docker.md)
+
+Las instrucciones completas para la instalación y configuración del backend, frontend y base de datos se encuentran detalladas en los archivos README dentro de cada carpeta correspondiente, al igual que si respectiva documentacion:
 
 [Back-End](backend/)
 
