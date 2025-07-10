@@ -22,15 +22,15 @@ services:
     ports:
       - "4000:4000"
     environment:
-      DATABASE_URL: postgres://postgres:postgres@db:5432/mydb
+      DATABASE_URL: postgres://postgresql:12345@db:5432/ocean_db
 
   frontend:
     build: ./frontend
     container_name: frontend_app
-    ports:
-      - "5173:80"
     depends_on:
       - backend
+    ports:
+      - "5173:5173"
 
 volumes:
   postgres_data:
