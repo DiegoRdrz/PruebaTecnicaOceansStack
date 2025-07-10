@@ -1,6 +1,6 @@
 # Docker – Oceans React Challenge
 
-Este documento explica cómo levantar el entorno completo del proyecto usando Docker Compose. Incluye el backend (API REST), el frontend (React) y la base de datos (PostgreSQL).
+Este documento explica cómo levantar el entorno back-end del proyecto usando Docker Compose. Incluye el backend (API REST) y la base de datos (PostgreSQL).
 
 ---
 
@@ -28,3 +28,5 @@ Luego de clonar el repositorio, vamos a realizar la correcta instalacion del sis
 3. Correr el comando para montar el contenedor
 
 - docker-compose up --build
+
+4. Realizar la instalacion del [Front-End](frontend/)
