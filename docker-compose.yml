@@ -6,9 +6,9 @@ services:
     container_name: postgres_db
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: mydb
+      POSTGRES_USER: postgresql
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: ocean_db
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
