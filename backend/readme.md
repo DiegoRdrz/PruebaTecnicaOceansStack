@@ -29,7 +29,9 @@ cd PruebaTecnicaOceansStack/backend/
 
 - npm install
 
-3. Configurar las variables de entorno: 
+3. Crear una base de datos en postgreSQL
+
+4. Configurar las variables de entorno: 
 
 Crea un archivo .env en la raíz del backend y define lo siguiente:
 
@@ -37,14 +39,14 @@ Crea un archivo .env en la raíz del backend y define lo siguiente:
 - DATABASE_URL="postgresql://usuario:contraseña@localhost:5432/nombre_basedatos" Se debe cambiar Usuario - Contraseña - El Puerto - nombre_basedatos segun el caso
 - JWT_SECRET="W9#l@5zB&c8X^Tk!Jr2P$eYq0VuM7hAo" (# Puedes modificar esta Clave por lo que quieras)
 
-4. Configurar Prisma
+5. Configurar Prisma
 
 Inicializa el cliente Prisma y genera el código necesario ejecutando los siguientes comnados:
 
 - npx prisma generate
 - npx prisma migrate dev --name init
 
-5. Crear un usuario administrador
+6. Crear un usuario administrador
 
 Para poder registrar otros usuarios y acceder a endpoints protegidos, es necesario contar con al menos un usuario con rol ADMIN. Ejecuta el siguiente script desde la raíz del backend:
 
@@ -52,7 +54,7 @@ Para poder registrar otros usuarios y acceder a endpoints protegidos, es necesar
 
 Este script creará un usuario con credenciales predefinidas (admin@example.com / admin123, por ejemplo). Puedes editar el script para personalizar estos valores antes de ejecutarlo.
 
-6. Iniciar el servidor con el comando:
+7. Iniciar el servidor con el comando:
 
 - npm run dev
 
