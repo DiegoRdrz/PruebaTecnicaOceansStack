@@ -23,7 +23,7 @@ Luego de clonar el repositorio, vamos a realizar la correcta instalacion del Bac
 
 1. Ahora navegamos a la carpeta raiz del Back-End con el siguiente comando:
 
-cd backend/
+cd PruebaTecnicaOceansStack/backend/
 
 2. Instalar dependencias con el siguiente comando:
 
