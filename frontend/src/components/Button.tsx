@@ -1,10 +1,13 @@
+//src/components/Button.tsx
+
 import type { ButtonHTMLAttributes } from 'react';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  variant?: 'primary' | 'danger';
+  variant?: 'primary' | 'danger'; 
 }
 
+// Componente botón reutilizable con estilos condicionales según la variante
 export const Button = ({ children, variant = 'primary', ...props }: ButtonProps) => {
   const base = 'px-4 py-2 rounded text-white font-semibold transition';
   const styles = {

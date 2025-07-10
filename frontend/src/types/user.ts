@@ -1,3 +1,5 @@
+//src/types/user.ts
+
 export type Role = 'ADMIN' | 'WAITER';
 
 export interface User{

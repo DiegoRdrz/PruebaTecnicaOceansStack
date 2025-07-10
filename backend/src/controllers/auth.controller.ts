@@ -4,9 +4,11 @@ import prisma from '../prisma/client';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'clave_secreta'; // se puede cambiar esta clave_secreta, por una clave alternativa en caso de no tener un archivo .env
+// Se define la clave secreta JWT desde las variables de entorno. 
+// Si no existe, se usa un valor por defecto.
+const JWT_SECRET = process.env.JWT_SECRET || 'clave_secreta';
 
-// Login
+// Controlador para iniciar sesión de un usuario existente
 export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
@@ -18,9 +20,11 @@ export const login = async (req: Request, res: Response) => {
 
     if (!user) return res.status(401).json({ message: 'Usuario no encontrado' });
 
+    // Compara la contraseña enviada con la almacenada en la base de datos
     const valid = await bcrypt.compare(password, user.password);
     if (!valid) return res.status(401).json({ message: 'Contraseña incorrecta' });
 
+    // Genera el token JWT con el ID y rol del usuario, válido por 1 día
     const token = jwt.sign({ id: user.id, role: user.role }, JWT_SECRET, { expiresIn: '1d' });
 
     res.json({ token, user: { id: user.id, name: user.name, role: user.role } });
@@ -30,7 +34,7 @@ export const login = async (req: Request, res: Response) => {
   }
 };
 
-// Register
+// Controlador para registrar un nuevo usuario
 export const register = async (req: Request, res: Response) => {
   const { name, email, password, role } = req.body;
 
@@ -38,18 +42,21 @@ export const register = async (req: Request, res: Response) => {
     return res.status(400).json({ message: 'Nombre, email y contraseña son requeridos' });
 
   try {
+    // Verifica si el correo ya está registrado
     const existingUser = await prisma.user.findUnique({ where: { email } });
 
     if (existingUser) return res.status(400).json({ message: 'Email ya registrado' });
 
+    // Encripta la contraseña antes de guardarla
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // Crea el nuevo usuario con los datos proporcionados
     const user = await prisma.user.create({
       data: {
         name,
         email,
         password: hashedPassword,
-        role: role || 'MESERO', // rol por defecto MESERO si no se envía
+        role: role || 'MESERO', // Si no se especifica un rol, se asigna MESERO por defecto
       },
     });
 

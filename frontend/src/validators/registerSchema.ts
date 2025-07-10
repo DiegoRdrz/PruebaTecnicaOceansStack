@@ -1,3 +1,5 @@
+//src/validators/registerSchema.ts
+
 import { z } from 'zod';
 
 export const registerSchema = z.object({

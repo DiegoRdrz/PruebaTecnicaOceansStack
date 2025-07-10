@@ -1,3 +1,5 @@
+//src/pages/OrdersPage.tsx
+
 import { useOrders } from '../hooks/useOrders';
 import { useProducts } from '../hooks/useProducts';
 import { useContext, useState, useEffect } from 'react';
@@ -7,21 +9,26 @@ import type { User } from '../types/user';
 import axios from '../api/axiosInstance';
 import { Button } from '../components/Button';
 
+// Página principal de gestión de órdenes
 const OrdersPage = () => {
+  // Hooks personalizados para órdenes y productos
   const { orders, loading, error, fetchOrders, createOrder } = useOrders();
   const { products, fetchProducts } = useProducts();
   const { user } = useContext(AuthContext);
 
+  // Estados locales para usuarios, visibilidad del formulario y control de errores
   const [users, setUsers] = useState<User[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [localError, setLocalError] = useState<string | null>(null);
 
+  // Cargar órdenes y productos al iniciar la página
   useEffect(() => {
     fetchOrders();
     fetchProducts();
   }, []);
 
+  // Si es ADMIN, cargar usuarios disponibles
   useEffect(() => {
     if (user?.role === 'ADMIN') {
       const fetchUsers = async () => {
@@ -36,6 +43,7 @@ const OrdersPage = () => {
     }
   }, [user]);
 
+  // Función para crear una orden
   const handleCreateOrder = async (data: {
     items: { productId: number; quantity: number }[];
     userId?: number;
@@ -43,7 +51,7 @@ const OrdersPage = () => {
     setSubmitting(true);
     setLocalError(null);
   
-    // ✅ Agrupar productos duplicados antes de enviar
+    // Agrupar productos duplicados
     const groupedItems = Object.values(
       data.items.reduce((acc, item) => {
         if (!acc[item.productId]) {
@@ -55,11 +63,13 @@ const OrdersPage = () => {
       }, {} as Record<number, { productId: number; quantity: number }>)
     );
   
+    // Calcular total de la orden
     const total = groupedItems.reduce((sum, item) => {
       const product = products.find(p => p.id === item.productId);
       return sum + (product ? product.price * item.quantity : 0);
     }, 0);
   
+    // Enviar orden al backend
     try {
       const payload = {
         items: groupedItems,
@@ -79,7 +89,7 @@ const OrdersPage = () => {
     }
   };
   
-
+  // Renderizado de la página
   return (
     <div className="p-6 max-w-5xl mx-auto mt-16">
       <div className="flex justify-between items-center mb-6">

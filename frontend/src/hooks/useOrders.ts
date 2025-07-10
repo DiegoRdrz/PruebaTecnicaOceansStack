@@ -1,3 +1,5 @@
+//src/components/Navbar.tsx
+
 import { useState, useEffect } from 'react';
 import type { Order, OrderCreateInput } from '../types/order';
 import {
@@ -7,11 +9,13 @@ import {
   deleteOrder,
 } from '../api/orders';
 
+// Hook para manejar estado y operaciones CRUD de órdenes
 export const useOrders = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Obtiene todas las órdenes desde la API y actualiza estado
   const fetchOrders = async () => {
     setLoading(true);
     try {
@@ -25,6 +29,7 @@ export const useOrders = () => {
     }
   };
 
+  // Crea una nueva orden y la agrega al estado local
   const handleCreate = async (orderData: OrderCreateInput) => {
     try {
       const newOrder = await apiCreateOrder(orderData);
@@ -34,6 +39,7 @@ export const useOrders = () => {
     }
   };
 
+  // Actualiza una orden existente en el estado local
   const handleUpdate = async (id: number, orderData: Partial<Order>) => {
     try {
       const updated = await updateOrder(id, orderData);
@@ -43,6 +49,7 @@ export const useOrders = () => {
     }
   };
 
+  // Elimina una orden del estado local y la API
   const handleDelete = async (id: number) => {
     try {
       await deleteOrder(id);
@@ -52,6 +59,7 @@ export const useOrders = () => {
     }
   };
 
+  // Carga inicial de órdenes al montar el hook
   useEffect(() => {
     fetchOrders();
   }, []);

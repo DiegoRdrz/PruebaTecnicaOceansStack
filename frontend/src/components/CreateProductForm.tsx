@@ -6,14 +6,15 @@ import type { ProductCreateInput } from '../api/products';
 import { Button } from './Button';
 import { z } from 'zod';
 
-const formSchema = productSchema;
 
-type FormValues = z.infer<typeof formSchema>;
+
+type FormValues = z.infer<typeof productSchema>;
 
 interface Props {
-  onCreate: (data: ProductCreateInput) => void;
+  onCreate: (data: ProductCreateInput) => void; // Callback para crear un producto
 }
 
+// Formulario para crear un nuevo producto con validación mediante Zod
 export const CreateProductForm = ({ onCreate }: Props) => {
   const {
     register,
@@ -21,9 +22,10 @@ export const CreateProductForm = ({ onCreate }: Props) => {
     formState: { errors },
     reset
   } = useForm<FormValues>({
-    resolver: zodResolver(formSchema)
+    resolver: zodResolver(productSchema),
   });
 
+  // Enviar datos validados y resetear formulario
   const onSubmit = (data: FormValues) => {
     onCreate(data);
     reset();
@@ -36,6 +38,7 @@ export const CreateProductForm = ({ onCreate }: Props) => {
     >
       <h2 className="text-lg font-semibold mb-4">Crear nuevo producto</h2>
 
+      {/* Input para nombre del producto con mensaje de error */}
       <div className="mb-4">
         <label className="block font-medium">Nombre</label>
         <input
@@ -48,6 +51,7 @@ export const CreateProductForm = ({ onCreate }: Props) => {
         )}
       </div>
 
+      {/* Input para precio del producto con validación y error */}
       <div className="mb-4">
         <label className="block font-medium">Precio</label>
         <input

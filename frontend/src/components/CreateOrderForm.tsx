@@ -1,18 +1,11 @@
+// src/components/CreateOrderForm.tsx
 import { useForm, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import type { Product } from '../types/product';
 import { Button } from './Button';
-import { useMemo, useState, useEffect } from 'react';
-
-const orderItemSchema = z.object({
-  productId: z.number().min(1, 'Debe seleccionar un producto'),
-  quantity: z.number().min(1, 'Cantidad mínima es 1'),
-});
-
-const orderSchema = z.object({
-  items: z.array(orderItemSchema).min(1, 'Debe agregar al menos un producto'),
-});
+import { useMemo, useState } from 'react';
+import { orderSchema } from '../validators/orderSchema';
+import type { z } from 'zod';
 
 type OrderFormData = z.infer<typeof orderSchema>;
 
@@ -45,10 +38,8 @@ export const CreateOrderForm = ({ products, onCreate }: Props) => {
 
   const toggleConfirm = (index: number) => {
     if (confirmedIndexes.includes(index)) {
-      // Si ya está confirmado, pasamos a modo edición
       setConfirmedIndexes(prev => prev.filter(i => i !== index));
     } else {
-      // Confirmar si tiene datos válidos
       const item = items[index];
       if (item.productId > 0 && item.quantity > 0) {
         setConfirmedIndexes(prev => [...prev, index]);
@@ -86,6 +77,7 @@ export const CreateOrderForm = ({ products, onCreate }: Props) => {
 
       <div className="mb-4">
         <label className="block font-medium mb-1">Productos</label>
+
         {fields.map((field, index) => {
           const isConfirmed = confirmedIndexes.includes(index);
 
@@ -115,9 +107,7 @@ export const CreateOrderForm = ({ products, onCreate }: Props) => {
               <button
                 type="button"
                 onClick={() => toggleConfirm(index)}
-                className={`text-lg px-2 ${
-                  isConfirmed ? 'text-blue-600' : 'text-green-600'
-                }`}
+                className={`text-lg px-2 ${isConfirmed ? 'text-blue-600' : 'text-green-600'}`}
                 title={isConfirmed ? 'Editar producto' : 'Confirmar producto'}
               >
                 {isConfirmed ? '✏️' : '✅'}
@@ -147,7 +137,7 @@ export const CreateOrderForm = ({ products, onCreate }: Props) => {
       <p className="font-semibold mb-4">Total confirmado: ${total.toFixed(2)}</p>
 
       <Button type="submit" disabled={submitting || confirmedIndexes.length !== items.length}>
-          {submitting ? 'Creando...' : 'Crear orden'}
+        {submitting ? 'Creando...' : 'Crear orden'}
       </Button>
 
       {confirmedIndexes.length !== items.length && (

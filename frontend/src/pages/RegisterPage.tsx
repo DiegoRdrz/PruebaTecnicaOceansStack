@@ -9,10 +9,12 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 const RegisterPage = () => {
+  // Obtener usuario y estado de autenticación del contexto
   const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [serverError, setServerError] = useState('');
 
+  // Configurar react-hook-form con validación usando zod
   const {
     register,
     handleSubmit,
@@ -21,16 +23,18 @@ const RegisterPage = () => {
     resolver: zodResolver(registerSchema),
   });
 
+  // Redirigir a home si no está autenticado o no es admin
   useEffect(() => {
     if (!isAuthenticated || user?.role !== 'ADMIN') {
       navigate('/');
     }
   }, [isAuthenticated, user]);
 
+  // Enviar datos para registrar usuario
   const onSubmit = async (data: RegisterData) => {
     try {
       await registerApi(data);
-      navigate('/');
+      navigate('/'); // Redirige tras registro exitoso
     } catch (error) {
       setServerError('Error al registrar el usuario');
     }

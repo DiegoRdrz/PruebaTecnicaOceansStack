@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'clave_secreta';
 
+// Verifica que el usuario esté autenticado mediante JWT
 export const authenticate = (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
   if (!authHeader) return res.sendStatus(401);

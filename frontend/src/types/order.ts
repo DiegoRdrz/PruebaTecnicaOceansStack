@@ -1,6 +1,8 @@
+// src/types/order.ts
 import type { Product } from './product';
 import type { User } from './user';
 
+// Producto dentro de una orden con cantidad
 export interface OrderProduct {
   id: number;
   product: Product;
@@ -8,6 +10,7 @@ export interface OrderProduct {
   quantity: number;
 }
 
+// Orden con usuario, fecha, total e items
 export interface Order {
   id: number;
   createdAt: string;
@@ -17,6 +20,7 @@ export interface Order {
   items: OrderProduct[];
 }
 
+// Datos para crear una orden
 export interface OrderCreateInput {
   userId: number;
   items: {

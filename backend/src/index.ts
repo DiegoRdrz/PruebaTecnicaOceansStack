@@ -9,25 +9,25 @@ import { swaggerUi, swaggerSpec } from './swagger';
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// ✅ Middleware CORS
+// Habilita CORS para permitir solicitudes desde el frontend
 app.use(cors({
   origin: 'http://localhost:5173',
   credentials: true
 }));
 
-// Middleware JSON
+// Habilita lectura de JSON en las peticiones
 app.use(express.json());
 
-// Rutas API
+// Rutas principales del API
 app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/analytics', analyticsRoutes);
 
-// Swagger UI
+// Documentación de la API con Swagger
 app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-// Inicio del servidor
+// Arranque del servidor
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en puerto ${PORT}`);
   console.log(`Docs en http://localhost:${PORT}/api/docs`);

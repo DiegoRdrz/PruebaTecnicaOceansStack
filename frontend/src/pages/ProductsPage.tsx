@@ -1,3 +1,5 @@
+// src/pages/ProductsPage.tsx
+
 import { useContext, useState } from 'react';
 import { useProducts } from '../hooks/useProducts';
 import { ProductCard } from '../components/ProductCard';
@@ -5,7 +7,9 @@ import { Button } from '../components/Button';
 import { CreateProductForm } from '../components/CreateProductForm';
 import { AuthContext } from '../context/AuthContext';
 
+// Página principal para ver y administrar productos
 const ProductsPage = () => {
+  // Hook personalizado para manejar productos
   const {
     products,
     loading,
@@ -15,14 +19,17 @@ const ProductsPage = () => {
     createProduct,
   } = useProducts();
 
+  // Contexto de usuario autenticado
   const { user } = useContext(AuthContext);
   const [showForm, setShowForm] = useState(false);
 
+  // Crear nuevo producto
   const handleCreate = async (data: Parameters<typeof createProduct>[0]) => {
     await createProduct(data);
     setShowForm(false); // cerrar el formulario después de crear
   };
 
+  // Render de la vista de productos
   return (
     <div className="p-6 max-w-5xl mx-auto mt-16">
       <div className="flex justify-between items-center mb-6">

@@ -1,4 +1,5 @@
-// src/components/ProductCard.tsx
+//src/components/ProductCard.tsx
+
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import type { Product } from '../types/product';
@@ -6,9 +7,11 @@ import { Button } from './Button';
 
 interface Props {
   product: Product;
-  onDelete: () => void;
+  onDelete: () => void; // Función para eliminar el producto
 }
 
+// Tarjeta para mostrar información de un producto
+// Solo muestra el botón "Eliminar" si el usuario es ADMIN
 export const ProductCard = ({ product, onDelete }: Props) => {
   const { user } = useContext(AuthContext);
 
@@ -18,6 +21,7 @@ export const ProductCard = ({ product, onDelete }: Props) => {
         <h2 className="text-xl font-bold mb-2">{product.name}</h2>
         <p className="text-gray-700 text-lg">${product.price.toFixed(2)}</p>
       </div>
+
       {user?.role === 'ADMIN' && (
         <Button onClick={onDelete} variant="danger" className="mt-4">
           Eliminar

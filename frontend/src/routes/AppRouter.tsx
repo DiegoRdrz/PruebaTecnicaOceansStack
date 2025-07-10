@@ -6,15 +6,16 @@ import RegisterPage from '../pages/RegisterPage';
 import { useAuth } from '../hooks/useAuth';
 
 const AppRouter = () => {
+  // Obtener estado de autenticación y usuario actual
   const { isAuthenticated, user } = useAuth();
 
   return (
     <Router>
       <Routes>
-        {/* Ruta pública */}
+        {/* Ruta pública: página de login */}
         <Route path="/login" element={<LoginPage />} />
 
-        {/* Ruta protegida: solo usuarios autenticados */}
+        {/* Rutas protegidas: solo accesibles si está autenticado */}
         <Route
           path="/products"
           element={
@@ -28,7 +29,7 @@ const AppRouter = () => {
           }
         />
 
-        {/* Ruta protegida: solo ADMIN */}
+        {/* Ruta protegida solo para administradores */}
         <Route
           path="/register"
           element={
@@ -40,7 +41,7 @@ const AppRouter = () => {
           }
         />
 
-        {/* Redirección por defecto */}
+        {/* Redirección para cualquier ruta no definida */}
         <Route path="*" element={<Navigate to="/products" replace />} />
       </Routes>
     </Router>

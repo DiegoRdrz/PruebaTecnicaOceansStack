@@ -1,3 +1,5 @@
+//src/hooks/useProducts.ts
+
 import { useEffect, useState } from 'react';
 import type { Product } from '../types/product';
 import type { ProductCreateInput } from '../api/products';
@@ -9,11 +11,14 @@ import {
   deleteProduct
 } from '../api/products';
 
+// Hook personalizado para gestionar productos:
+// carga inicial, creación, actualización y eliminación
 export const useProducts = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Obtiene todos los productos desde la API y actualiza estado
   const fetchProducts = async () => {
     try {
       setLoading(true);
@@ -26,6 +31,7 @@ export const useProducts = () => {
     }
   };
 
+  // Crea un nuevo producto y lo agrega al estado local
   const handleCreate = async (input: ProductCreateInput) => {
     try {
       const newProduct = await createProduct(input);
@@ -35,6 +41,7 @@ export const useProducts = () => {
     }
   };
 
+  // Actualiza un producto existente en el estado local
   const handleUpdate = async (id: number, input: Partial<ProductCreateInput>) => {
     try {
       const updated = await updateProduct(id, input);
@@ -44,6 +51,7 @@ export const useProducts = () => {
     }
   };
 
+  // Elimina un producto del estado local y la API
   const handleDelete = async (id: number) => {
     try {
       await deleteProduct(id);
@@ -53,6 +61,7 @@ export const useProducts = () => {
     }
   };
 
+  // Carga inicial de productos al montar el hook
   useEffect(() => {
     fetchProducts();
   }, []);

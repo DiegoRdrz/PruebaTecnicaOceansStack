@@ -1,6 +1,9 @@
+// src/components/Dashboard/LastOrders.tsx
+
 import { useEffect, useState } from 'react';
 import axios from '../../api/axiosInstance';
 
+// Tipos para modelar productos, items de orden y ordenes completas
 type Product = {
   name: string;
   price: number;
@@ -22,11 +25,13 @@ type Order = {
   items: OrderItem[];
 };
 
+// Componente que muestra las últimas 5 órdenes en un dashboard
 const LastOrders = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Al montar el componente, se realiza la petición para obtener las órdenes recientes
   useEffect(() => {
     const fetchOrders = async () => {
       try {
@@ -43,10 +48,12 @@ const LastOrders = () => {
     fetchOrders();
   }, []);
 
+  // Renderizado condicional según estado de carga y error
   if (loading) return <p>Cargando...</p>;
   if (error) return <p className="text-red-500">{error}</p>;
   if (orders.length === 0) return <p>No hay órdenes recientes</p>;
 
+  // Renderiza la lista de órdenes con detalles básicos y sus items
   return (
     <div className="overflow-auto max-h-[300px]">
       <ul className="divide-y divide-gray-200">

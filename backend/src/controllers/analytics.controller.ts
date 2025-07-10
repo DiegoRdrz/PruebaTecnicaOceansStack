@@ -1,7 +1,9 @@
+// src/controllers/analytics.controller.ts
 import { Request, Response } from 'express';
 import prisma from '../prisma/client';
 import { subMonths, startOfDay, endOfDay, eachDayOfInterval, format } from 'date-fns';
 
+// Obtiene la cantidad de órdenes creadas en el último mes, agrupadas por nombre de usuario
 export const getQuantityByMonth = async (req: Request, res: Response) => {
   try {
     const startDate = subMonths(new Date(), 1);
@@ -15,7 +17,6 @@ export const getQuantityByMonth = async (req: Request, res: Response) => {
       }
     });
 
-    // Contar número de órdenes por usuario
     const orderCounts: Record<string, number> = {};
 
     orders.forEach(order => {
@@ -36,6 +37,7 @@ export const getQuantityByMonth = async (req: Request, res: Response) => {
   } 
 };
 
+// Calcula los ingresos generados por usuario en el último mes, sumando el total de cada orden
 export const getRevenueByMonth = async (req: Request, res: Response) => {
   try {
     const startDate = subMonths(new Date(), 1);
@@ -64,9 +66,10 @@ export const getRevenueByMonth = async (req: Request, res: Response) => {
   }
 };
 
+// Retorna los 5 productos más vendidos, ordenados por cantidad total
 export const getTopProducts = async (req: Request, res: Response) => {
   try {
-    // Paso 1: agrupar orderProduct por productId y sumar cantidades
+    // Agrupa por ID de producto y suma las cantidades vendidas
     const grouped = await prisma.orderProduct.groupBy({
       by: ['productId'],
       _sum: {
@@ -82,12 +85,12 @@ export const getTopProducts = async (req: Request, res: Response) => {
 
     const productIds = grouped.map(g => g.productId);
 
-    // Paso 2: obtener productos por sus IDs
+    // Obtiene los productos correspondientes por sus IDs
     const products = await prisma.product.findMany({
       where: { id: { in: productIds } }
     });
 
-    // Paso 3: unir datos para respuesta
+    // Combina la información del producto con la cantidad vendida
     const result = grouped.map(g => {
       const product = products.find(p => p.id === g.productId);
       return {
@@ -105,16 +108,14 @@ export const getTopProducts = async (req: Request, res: Response) => {
   }
 };
 
+// Devuelve la cantidad de órdenes por usuario y por día, durante el último mes
 export const getQuantityByDay = async (req: Request, res: Response) => {
   try {
-    // Rango de fechas: último mes hasta hoy
     const endDate = new Date();
     const startDate = subMonths(endDate, 1);
 
-    // Obtener todos los días en el rango para tener el eje X completo
     const daysArray = eachDayOfInterval({ start: startDate, end: endDate });
 
-    // Obtener todas las órdenes del último mes con usuario
     const orders = await prisma.order.findMany({
       where: {
         createdAt: {
@@ -131,11 +132,10 @@ export const getQuantityByDay = async (req: Request, res: Response) => {
       }
     });
 
-    // Obtener lista única de usuarios que tuvieron órdenes
+    // Lista de usuarios únicos que hicieron órdenes
     const users = Array.from(new Map(orders.map(o => [o.user.id, o.user])).values());
 
-    // Inicializar estructura para contar órdenes por usuario y día
-    // Ejemplo: { 'Juan': { '2023-06-01': 0, '2023-06-02': 0, ... }, 'Maria': { ... } }
+    // Inicializa una estructura vacía con ceros para cada usuario y día
     const dataByUser: Record<string, Record<string, number>> = {};
     users.forEach(user => {
       dataByUser[user.name] = {};
@@ -145,7 +145,7 @@ export const getQuantityByDay = async (req: Request, res: Response) => {
       });
     });
 
-    // Contar las órdenes por usuario y fecha (día)
+    // Cuenta cuántas órdenes hizo cada usuario en cada día
     orders.forEach(order => {
       const userName = order.user.name;
       const dayStr = format(order.createdAt, 'yyyy-MM-dd');
@@ -154,8 +154,7 @@ export const getQuantityByDay = async (req: Request, res: Response) => {
       }
     });
 
-    // Transformar a formato para gráfica: array de objetos, cada objeto es un día con propiedades usuario1, usuario2, etc.
-    // Ejemplo: [{ date: '2023-06-01', Juan: 3, Maria: 1 }, { date: '2023-06-02', Juan: 0, Maria: 4 }, ...]
+    // Transforma los datos a un array de objetos para gráficas
     const chartData = daysArray.map(day => {
       const dayStr = format(day, 'yyyy-MM-dd');
       const entry: any = { date: dayStr };
@@ -173,6 +172,7 @@ export const getQuantityByDay = async (req: Request, res: Response) => {
   }
 };
 
+// Devuelve las últimas 5 órdenes creadas, con detalles del usuario y productos incluidos
 export const getLastOrders = async (req: Request, res: Response) => {
   try {
     const orders = await prisma.order.findMany({
