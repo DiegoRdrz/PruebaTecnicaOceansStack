@@ -14,7 +14,10 @@ RUN npm install
 COPY . .
 
 # Generar cliente Prisma
-RUN npx prisma generate
+RUN npx prisma generate#
+
+# Ejecutar migraciones de la base de datos
+RUN npx prisma migrate deploy
 
 # Exponer el puerto que usa el backend (ajústalo si usas otro)
 EXPOSE 4000
